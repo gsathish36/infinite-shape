@@ -4,11 +4,16 @@
   "description": "Infinite recursive shape",
   "main": "index.js",
   "scripts": {
+    "start": "node app.js",
     "test": "jest"
   },
   "author": "Sathish Gajarla <sathishgajarla@gmail.com>",
   "license": "ISC",
   "devDependencies": {
     "jest": "^24.9.0"
+  },
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1"
   }
 }

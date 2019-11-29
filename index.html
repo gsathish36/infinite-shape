@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<!-- saved from url=(0069)https://infinite-peaceful-stream.herokuapp.com/draw.php?w=40&h=20&o=4 -->
+<html lang="en" class="gr__infinite-peaceful-stream_herokuapp_com">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Infinite shape</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+        function submitForm(e) {
+            //Due to less time directly using the basic http request.
+            var height = document.getElementById("height").value
+            var width = document.getElementById("width").value
+            var padding = document.getElementById("padding").value
+            var url = window.location.origin;
+            url += '/api/shape/h/' + height + '/w/' + width + '/p/' + padding;
+            const Http = new XMLHttpRequest();
+            Http.open("GET", url);
+            Http.send();
+            Http.onreadystatechange = function (e) {
+                if (this.readyState == 4 && this.status === 200) {
+                    var result = Http.responseText;
+                    result = JSON.parse(result)
+                    if (result.message) {
+                        var warning = document.getElementById('warning');
+                        warning.innerHTML = 'Warning: '+result.message;
+                        var div = document.getElementById('shape');
+                        div.innerHTML = "";
+                        var heading = document.getElementById('heading');
+                        heading.innerHTML = "";
+                    } else if (result.shape) {
+                        var warning = document.getElementById('warning');
+                        warning.innerHTML = '';
+                        var heading = document.getElementById('heading');
+                        heading.innerHTML = "Shape";
+                        var div = document.getElementById('shape');
+                        div.innerHTML = result.shape;
+                    }
+                }
+            }
+        }
+    </script>
+
+</head>
+
+<body data-gr-c-s-loaded="true">
+    <div class="container-fluid ">
+        <div class="mx-auto">
+            <form class="form-inline my-3" action='' method="get">
+                <div class="form-group mr-2">
+                    <label>Width</label>
+                    <input class="form-control" name="width" id="width" value="40">
+                </div>
+                <div class="form-group mr-2">
+                    <label>Height</label>
+                    <input class="form-control" name="height" id="height" value="20">
+                </div>
+                <div class="form-group mr-2">
+                    <label>Padding</label>
+                    <input class="form-control" name="padding" id="padding" value="4">
+                </div>
+                <button class="btn btn-sm btn-success mr-3"
+                    onclick="event.preventDefault(); submitForm()">Submit</button>
+            </form>
+
+            <div>
+                <h4><span id="warning"></span></h4>
+                <h4 id="heading"></h4>
+                <pre id="shape"></pre>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>
