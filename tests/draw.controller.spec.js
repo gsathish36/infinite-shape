@@ -1,4 +1,4 @@
-const DrawController = require('../draw.controller')
+const DrawController = require('../src/draw.controller')
 
 const test_data = require('./test_data.json');
 

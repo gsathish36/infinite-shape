@@ -3,14 +3,14 @@ const http = require('http');
 const bodyParser = require('body-parser');
 const path = require('path');
 
-const drawController = require('./draw.controller');
+const drawController = require('./src/draw.controller');
 
 const registerRoutes = (app) => {
     app.get('/api/shape/h/:height/w/:width/p/:padding', drawController.getShape)
 
     // All other routes should redirect to the index.html
     app.route('/*').get(function(req, res) {
-        res.sendFile(path.join(__dirname, '', 'index.html'));
+        res.sendFile(path.join(__dirname, '/src/', 'index.html'));
     });
 }
 
